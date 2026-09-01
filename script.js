@@ -58,12 +58,20 @@
     })(t0);
   }
 
+  // no hover means a touch device — tell them it takes two taps
+  if(window.matchMedia('(hover: none)').matches){
+    const ht = document.getElementById('hintText');
+    if(ht) ht.textContent = 'double-tap the background';
+  }
+
   // taps on the background, or anywhere that isn't a link/button.
   // fires on release, not press: on a phone every scroll STARTS with a
   // touch, so firing on pointerdown glitched the page on every swipe.
   // we remember where the finger went down and only glitch if it
   // barely moved and lifted quickly — i.e. a tap, not a drag.
   let downX = 0, downY = 0, downAt = 0, armed = false;
+  // touch devices need two taps — one tap is too easy to trigger by accident
+  let lastTapAt = 0, lastTapX = 0, lastTapY = 0;
 
   document.addEventListener('pointerdown', e => {
     armed = !e.target.closest('a,button,input,textarea,select,#term,.marq,table');
@@ -76,6 +84,20 @@
     const moved = Math.hypot(e.clientX - downX, e.clientY - downY);
     if(moved > 12) return;                          // dragged or scrolled
     if(performance.now() - downAt > 600) return;    // long press
+
+    // pointerType tells us how this event was made: 'mouse', 'touch' or 'pen'
+    if(e.pointerType === 'touch'){
+      const now = performance.now();
+      const nearLast = Math.hypot(e.clientX - lastTapX, e.clientY - lastTapY) < 44;
+      if(now - lastTapAt < 400 && nearLast){
+        lastTapAt = 0;            // consume it, so a third tap starts fresh
+        glitch(e.clientY);
+      } else {
+        lastTapAt = now; lastTapX = e.clientX; lastTapY = e.clientY;
+      }
+      return;
+    }
+
     glitch(e.clientY);
   });
 
