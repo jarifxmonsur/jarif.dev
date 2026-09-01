@@ -142,6 +142,7 @@ section{padding:70px 0;border-bottom:1px solid var(--line)}
 /* project card */
 .builds{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
 .builds.single{grid-template-columns:minmax(0,600px)}
+.builds.pair{grid-template-columns:repeat(2,1fr)}
 .build .tags a{color:var(--cyan);text-decoration:none}
 .build .tags a:hover{border-bottom:1px solid var(--cyan)}
 .aside{margin-top:22px;font-family:var(--mono);font-size:12px;color:var(--muted);max-width:60ch}
@@ -156,24 +157,54 @@ section{padding:70px 0;border-bottom:1px solid var(--line)}
 .build .tags{margin-top:16px;font-family:var(--mono);font-size:11.5px;color:var(--muted)}
 
 /* skills table */
-table{width:100%;border-collapse:collapse;font-size:.95rem}
-th{text-align:left;font-family:var(--mono);font-size:11.5px;font-weight:400;color:var(--muted);padding-bottom:10px;border-bottom:1px solid var(--line-strong)}
-td{padding:13px 0;border-bottom:1px solid var(--line);vertical-align:top}
-td:first-child{font-family:var(--mono);font-weight:500;width:24%}
-td:nth-child(2){font-family:var(--mono);color:var(--signal);width:20%;font-size:.87rem}
-td:last-child{color:color-mix(in srgb,var(--chalk) 78%,transparent)}
+.skills{display:flex;flex-wrap:wrap;gap:10px;list-style:none;padding:0;margin:0}
+.skills li{
+  font-family:var(--mono);font-size:13px;color:var(--muted);
+  border:1px solid var(--line-strong);border-radius:var(--radius);
+  padding:8px 14px;white-space:nowrap;
+  transition:color .2s,border-color .2s,background .2s;
+}
+.skills li:hover{color:var(--navy);background:var(--cyan);border-color:var(--cyan)}
+body.paper .skills li:hover{color:#fff}
 
-/* contact */
+.marq{overflow:hidden;padding:1px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.marq + .marq{margin-top:10px}
+.marq-track{display:flex;gap:10px;width:max-content;animation:scrollx 32s linear infinite}
+.marq.rev .marq-track{animation-direction:reverse}
+.marq:hover .marq-track,.marq:focus-within .marq-track{animation-play-state:paused}
+@keyframes scrollx{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.hobbies{display:flex;flex-wrap:wrap;align-items:baseline;list-style:none;padding:0;margin:0;gap:0 4px}
+.hobbies li{font-size:clamp(1.1rem,2.6vw,1.5rem);letter-spacing:-.01em;transition:color .2s}
+.hobbies li:hover{color:var(--cyan)}
+.hobbies li+li::before{content:"·";color:var(--signal);margin:0 14px 0 10px}
+
 .end{padding:80px 0 96px;border-bottom:0}
 .end h2{font-size:clamp(1.8rem,5vw,3.1rem);line-height:1.08;max-width:20ch;margin-bottom:18px}
 .end p{max-width:56ch;color:color-mix(in srgb,var(--chalk) 82%,transparent);margin-bottom:30px}
 .links{display:flex;flex-wrap:wrap;gap:12px}
-.links a{font-family:var(--mono);font-size:13px;text-decoration:none;border:1px solid var(--line-strong);border-radius:var(--radius);padding:11px 17px}
+.links a{
+  display:inline-flex;align-items:center;
+  font-family:var(--mono);font-size:13px;text-decoration:none;
+  border:1px solid var(--line-strong);border-radius:var(--radius);padding:11px 14px;
+  transition:background .2s,border-color .2s,color .2s;
+}
+.links a svg{width:16px;height:16px;flex:none;fill:currentColor;display:block}
+.links a .lbl{
+  display:inline-block;max-width:0;margin-left:0;
+  overflow:hidden;white-space:nowrap;opacity:0;
+  transition:max-width .34s cubic-bezier(.4,0,.2,1),opacity .22s ease,margin-left .34s cubic-bezier(.4,0,.2,1);
+}
+.links a:hover .lbl,.links a:focus-visible .lbl{max-width:260px;margin-left:9px;opacity:1}
+@media (hover:none){
+  .links a .lbl{max-width:260px;margin-left:9px;opacity:1}
+}
 .links a:hover,.links a:focus-visible{background:var(--cyan);color:var(--navy);border-color:var(--cyan)}
 body.paper .links a:hover,body.paper .links a:focus-visible{color:#fff}
 .links a.key{background:var(--signal);color:#08182B;border-color:var(--signal)}
 .links a.key:hover{background:var(--cyan)}
 .colophon{margin-top:52px;font-family:var(--mono);font-size:11.5px;color:var(--muted);line-height:1.9}
+.copy{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted)}
 
 /* corner counter */
 #hint{
@@ -203,5 +234,6 @@ body.paper .links a:hover,body.paper .links a:focus-visible{color:#fff}
 }
 @media print{
   #hint,#tears,#scan,#field,.term-shell,.rail{display:none}
+  .links a .lbl{max-width:none;margin-left:9px;opacity:1}
   body{background:#fff;color:#000}
 }
