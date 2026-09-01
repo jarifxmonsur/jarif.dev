@@ -182,3 +182,24 @@ body.paper .links a:hover,body.paper .links a:focus-visible{color:#fff}
  
 :focus-visible{outline:2px solid var(--signal);outline-offset:3px}
 .svg-defs{position:absolute;width:0;height:0}
+
+@media (max-width:880px){
+  .builds{grid-template-columns:1fr}
+  .entry{grid-template-columns:1fr;gap:6px}
+  .rail nav a:not(.keep){display:none}
+}
+@media (max-width:520px){
+  .wrap{padding:0 18px}
+  .status span{display:none}
+  #hint{left:14px;right:auto}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+
+@media print{
+  #hint,#tears,#scan,#field,.term-shell,.rail{display:none}
+  body{background:#fff;color:#000}
+}
