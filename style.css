@@ -125,3 +125,9 @@ body.glitching .mark{
 .chip{font-family:var(--mono);font-size:11.5px;color:var(--muted);background:transparent;border:1px dashed var(--line-strong);border-radius:var(--radius);padding:4px 9px;cursor:pointer}
 .chip:hover,.chip:focus-visible{color:var(--navy);background:var(--cyan);border-style:solid;border-color:var(--cyan)}
 body.paper .chip:hover,body.paper .chip:focus-visible{color:#fff}
+
+section{padding:70px 0;border-bottom:1px solid var(--line)}
+.head{display:flex;align-items:baseline;gap:16px;margin-bottom:38px}
+.head h2{font-size:clamp(1.45rem,3.4vw,2rem)}
+.head .rule{flex:1;height:1px;background:var(--line)}
+.head .idx{font-family:var(--mono);font-size:12.5px;color:var(--cyan)}
