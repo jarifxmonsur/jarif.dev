@@ -58,12 +58,29 @@
     })(t0);
   }
 
-  // clicks on the background, or anywhere that isn't a link/button
-  field.addEventListener('pointerdown', e => glitch(e.clientY));
-  page.addEventListener('pointerdown', e => {
-    if(e.target.closest('a,button,input,textarea,select,#term,table')) return;
+  // taps on the background, or anywhere that isn't a link/button.
+  // fires on release, not press: on a phone every scroll STARTS with a
+  // touch, so firing on pointerdown glitched the page on every swipe.
+  // we remember where the finger went down and only glitch if it
+  // barely moved and lifted quickly — i.e. a tap, not a drag.
+  let downX = 0, downY = 0, downAt = 0, armed = false;
+
+  document.addEventListener('pointerdown', e => {
+    armed = !e.target.closest('a,button,input,textarea,select,#term,.marq,table');
+    downX = e.clientX; downY = e.clientY; downAt = performance.now();
+  });
+
+  document.addEventListener('pointerup', e => {
+    if(!armed) return;
+    armed = false;
+    const moved = Math.hypot(e.clientX - downX, e.clientY - downY);
+    if(moved > 12) return;                          // dragged or scrolled
+    if(performance.now() - downAt > 600) return;    // long press
     glitch(e.clientY);
   });
+
+  // the browser fires this when it takes the gesture over for scrolling
+  document.addEventListener('pointercancel', () => { armed = false; });
 
   // terminal
   function line(html, cls){
