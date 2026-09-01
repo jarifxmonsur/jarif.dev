@@ -4,7 +4,7 @@
   const chipBox = document.getElementById('chips');
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // the glitch bit
+  // the glitch effect
   const page = document.getElementById('page');
   const field = document.getElementById('field');
   const tears = document.getElementById('tears');
@@ -248,7 +248,7 @@
     src.replaceWith(frag);
   })();
 
-  // light/dark
+  // light nd dark mode
   const flip = document.getElementById('flip');
   flip.addEventListener('click', ()=>{
     const on = document.body.classList.toggle('paper');
