@@ -14,3 +14,114 @@
   --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
   --sans:"Space Grotesk",system-ui,-apple-system,Segoe UI,sans-serif;
 }
+
+body.paper{
+  --navy:#F6F4EE;
+  --navy-2:#EFECE3;
+  --panel:rgba(255,255,255,.82);
+  --line:rgba(20,45,70,.18);
+  --line-strong:rgba(20,45,70,.38);
+  --chalk:#122334;
+  --muted:#5A6E80;
+  --cyan:#0E7C93;
+  --signal:#A2661A;
+  --grid:rgba(20,45,70,.06);
+  --grid-major:rgba(20,45,70,.1);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--navy);color:var(--chalk);
+  font-family:var(--sans);font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  transition:background .35s ease,color .35s ease;
+}
+
+#field{
+  position:fixed;inset:0;z-index:0;cursor:crosshair;
+  background-image:
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px),
+    linear-gradient(var(--grid-major) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid-major) 1px,transparent 1px);
+  background-size:24px 24px,24px 24px,120px 120px,120px 120px;
+  transition:background-position .18s ease;
+}
+#tears{position:fixed;inset:0;z-index:45;pointer-events:none;overflow:hidden}
+.tear{
+  position:absolute;left:0;width:100%;
+  mix-blend-mode:screen;pointer-events:none;
+  /* steps(3) makes the animation jump through 3 discrete stages rather
+     than easing smoothly — that stutter is what reads as "broken".
+     `forwards` holds the final frame instead of snapping back. */
+  animation:tearOut .34s steps(3) forwards;
+}
+body.paper .tear{mix-blend-mode:multiply}
+@keyframes tearOut{
+  0%{opacity:.85}
+  55%{opacity:.7}
+  100%{opacity:0}
+}
+#scan{
+  position:fixed;inset:0;z-index:44;pointer-events:none;opacity:0;
+  background:repeating-linear-gradient(0deg,rgba(53,214,240,.16) 0 1px,transparent 1px 4px);
+}
+body.glitching #scan{animation:scanFlash .3s steps(2) forwards}
+@keyframes scanFlash{0%{opacity:.9}100%{opacity:0}}
+ 
+.wrap{max-width:1140px;margin:0 auto;padding:0 28px}
+#page{position:relative;z-index:1}
+ 
+a{color:inherit}
+h1,h2,h3{margin:0;font-weight:700;letter-spacing:-.02em}
+p{margin:0}
+
+.rail{
+  position:sticky;top:0;z-index:20;
+  background:color-mix(in srgb,var(--navy) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+}
+.rail .wrap{display:flex;align-items:center;gap:18px;height:52px}
+.mark{font-family:var(--mono);font-weight:700;font-size:14px}
+.mark span{color:var(--cyan)}
+body.glitching .mark{
+  text-shadow:2px 0 var(--cyan),-2px 0 var(--signal);
+  transform:translateX(-2px);
+}
+.rail nav{margin-left:auto;display:flex;gap:20px;align-items:center}
+.rail nav a{font-family:var(--mono);font-size:12.5px;color:var(--muted);text-decoration:none;padding:4px 2px;border-bottom:1px solid transparent}
+.rail nav a:hover,.rail nav a:focus-visible{color:var(--chalk);border-bottom-color:var(--cyan)}
+.status{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 3px color-mix(in srgb,var(--cyan) 22%,transparent)}
+.flip{font-family:var(--mono);font-size:12px;color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:var(--radius);padding:5px 10px;cursor:pointer}
+.flip:hover,.flip:focus-visible{color:var(--chalk);border-color:var(--line-strong)}
+
+.hero{padding:74px 0 56px;border-bottom:1px solid var(--line)}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px 26px;font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-bottom:26px}
+.meta-row b{color:var(--chalk);font-weight:500}
+
+.name{font-family:var(--mono);font-size:clamp(2.7rem,10vw,7rem);line-height:.9;letter-spacing:-.055em;font-weight:700;margin-bottom:20px}
+.name .slash{color:var(--cyan)}
+.pitch{max-width:56ch;font-size:clamp(1.05rem,2.1vw,1.3rem);line-height:1.5}
+.pitch em{font-style:normal;border-bottom:2px solid var(--signal);padding-bottom:1px}
+
+.term-shell{margin-top:44px;border:1px solid var(--line-strong);border-radius:var(--radius);background:var(--panel);overflow:hidden}
+.term-bar{display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--muted)}
+.term-bar .lamp{width:8px;height:8px;border-radius:50%;background:var(--line-strong)}
+.term-bar .lamp.on{background:var(--signal)}
+.term-bar .path{margin-left:auto}
+#term{font-family:var(--mono);font-size:13.5px;line-height:1.75;padding:18px 16px 8px;min-height:270px;max-height:400px;overflow-y:auto}
+#term .ln{white-space:pre-wrap;word-break:break-word}
+#term .cy{color:var(--cyan)}
+#term .sg{color:var(--signal)}
+#term .mu{color:var(--muted)}
+#term .kv{display:flex;gap:14px}
+#term .kv b{color:var(--muted);font-weight:400;min-width:98px;flex:none}
+.prompt-row{display:flex;align-items:center;gap:9px;padding:0 16px 16px;font-family:var(--mono);font-size:13.5px}
+.prompt-row .ps1{color:var(--cyan);flex:none}
+#cmd{flex:1;background:transparent;border:0;outline:0;color:var(--chalk);font-family:var(--mono);font-size:13.5px;padding:6px 0;caret-color:var(--signal)}
+.chips{display:flex;flex-wrap:wrap;gap:7px;padding:0 16px 16px}
+.chip{font-family:var(--mono);font-size:11.5px;color:var(--muted);background:transparent;border:1px dashed var(--line-strong);border-radius:var(--radius);padding:4px 9px;cursor:pointer}
+.chip:hover,.chip:focus-visible{color:var(--navy);background:var(--cyan);border-style:solid;border-color:var(--cyan)}
+body.paper .chip:hover,body.paper .chip:focus-visible{color:#fff}
