@@ -1,9 +1,7 @@
 (function(){
-  
   const term = document.getElementById('term');
   const input = document.getElementById('cmd');
   const chipBox = document.getElementById('chips');
- 
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // the glitch bit
@@ -17,11 +15,9 @@
 
   function rand(a,b){ return a + Math.random()*(b-a); }
 
- 
   function spawnTears(y){
     const n = reduce ? 2 : 9;
     for(let i=0;i<n;i++){
-      
       const t = document.createElement('div');
       t.className = 'tear';
       const h = rand(3,26);
@@ -34,12 +30,10 @@
         : 'linear-gradient(90deg,rgba(255,194,75,.45),transparent,rgba(53,214,240,.5))';
       t.style.animationDelay = (i * 12) + 'ms';
       tears.appendChild(t);
-      
       setTimeout(()=>t.remove(), 520 + i*12);
     }
   }
 
- 
   function glitch(y){
     count++; countEl.textContent = count;
     spawnTears(y);
@@ -50,17 +44,12 @@
     field.style.backgroundPosition = rand(-14,14).toFixed(0)+'px '+rand(-14,14).toFixed(0)+'px';
     setTimeout(()=>{ field.style.backgroundPosition = '0 0'; }, 260);
 
-    
     if(reduce || busy) return;
     busy = true;
     page.style.filter = 'url(#gl)';
-    
     const t0 = performance.now(), dur = 380;
-    
     (function frame(now){
-      
       const p = Math.min(1, (now - t0) / dur);
-      
       const decay = Math.pow(1 - p, 2);
       turb.setAttribute('baseFrequency', (0.0002 + Math.random()*0.02*decay).toFixed(5) + ' ' + (0.3 + Math.random()*0.5).toFixed(3));
       disp.setAttribute('scale', (34 * decay).toFixed(1));
@@ -76,13 +65,12 @@
     glitch(e.clientY);
   });
 
-
+  // terminal
   function line(html, cls){
     const d = document.createElement('div');
     d.className = 'ln ' + (cls||'');
     d.innerHTML = html;
     term.appendChild(d);
-    
     term.scrollTop = term.scrollHeight;
   }
   function kv(k,v){ line('<span class="kv"><b>'+k+'</b><span>'+v+'</span></span>'); }
@@ -92,7 +80,6 @@
     if(el) setTimeout(()=>el.scrollIntoView({behavior: reduce?'auto':'smooth', block:'start'}), 300);
   }
 
-
   const commands = {
     help(){
       line('Available:', 'mu');
@@ -101,6 +88,7 @@
       kv('builds','things I\'ve made');
       kv('stack','what I know and how well');
       kv('learning','what I\'m in the middle of');
+      kv('hobbies','what I do otherwise');
       kv('contact','how to reach me');
       kv('glitch','break the page on purpose');
       kv('paper','flip to the printable version');
@@ -114,7 +102,7 @@
       kv('doing','CS50x + CS50P, on top of uni');
       kv('after','<span class="cy">an internship, or any real project</span>');
       blank();
-      line('Not much here yet. All of it is mine though.');
+      line('Not much here yet. Still a journey in progress.');
     },
     log(){
       line('<span class="sg">Feb 2026</span>  started CS at UNSW');
@@ -125,19 +113,24 @@
     builds(){
       line('CultureGuessr  <span class="mu">real-time multiplayer culture guessing game</span>');
       line('               <span class="cy">cultureguessr.onrender.com</span>');
+      line('MIPS decoder   <span class="mu">reads machine code, prints the assembly</span>');
       blank();
-      line('That\'s it so far. One thing, finished, online.', 'mu');
+      line('Two so far. Both finished.', 'mu');
       go('#builds');
     },
     stack(){
       line('C · git             <span class="mu">comfortable</span>');
       line('Python · HTML/CSS   <span class="mu">getting there</span>');
-      line('FastAPI · JavaScript<span class="mu"> just started</span>');
+      line('FastAPI · JavaScript <span class="mu">just started</span>');
       go('#stack');
     },
     learning(){
       line('Right now: CS50x and CS50P, both going at once, plus first year.');
       line('Want to end up in AI engineering, full-stack or cloud. Trying all three.', 'mu');
+    },
+    hobbies(){
+      line('Gaming · Watching and playing soccer · Travelling');
+      go('#hobbies');
     },
     contact(){
       kv('email','<span class="cy">zarifxmonsur@gmail.com</span>');
@@ -151,12 +144,12 @@
     },
     paper(){
       document.getElementById('flip').click();
-      line('Switched. Print this page for a clean one-page résumé.', 'sg');
+      line('Switched. Ctrl+P prints this as a clean one-page résumé.', 'sg');
     },
     clear(){ term.innerHTML = ''; }
   };
 
-  ['whoami','log','builds','stack','learning','glitch','contact'].forEach(c=>{
+  ['whoami','log','builds','stack','hobbies','learning','glitch','contact'].forEach(c=>{
     const b = document.createElement('button');
     b.className='chip'; b.type='button'; b.textContent=c;
     b.addEventListener('click', ()=>{ input.value=c; run(c); input.focus(); });
@@ -173,10 +166,8 @@
     if(cmd !== 'clear') blank();
     input.value=''; hist.unshift(raw); hIdx=-1;
   }
-  
   input.addEventListener('keydown', e=>{
     if(e.key==='Enter') run(input.value);
-    
     else if(e.key==='ArrowUp'){ e.preventDefault(); if(hIdx<hist.length-1){ hIdx++; input.value=hist[hIdx]; } }
     else if(e.key==='ArrowDown'){ e.preventDefault(); if(hIdx>0){ hIdx--; input.value=hist[hIdx]; } else { hIdx=-1; input.value=''; } }
   });
@@ -193,17 +184,48 @@
     boot.forEach(b => b[0]==='__WHOAMI__' ? commands.whoami() : line(b[0]));
     blank();
   } else {
-    let t = 0;
+    let t=0;
     boot.forEach(b=>{
       t += b[1];
       setTimeout(()=>{ if(b[0]==='__WHOAMI__'){ commands.whoami(); blank(); } else line(b[0]); }, t);
     });
   }
 
+  // turn the plain skills list into two scrolling rows.
+  // the <ul> in the HTML is the source of truth — this just rearranges it,
+  // so if JS fails you still get a normal wrapped list.
+  (function marquee(){
+    const src = document.getElementById('skills');
+    if(!src || reduce) return;
+    const items = [...src.children];
+    if(items.length < 6) return;
+
+    const rows = [[], []];
+    items.forEach((el, i) => rows[i % 2].push(el));
+
+    const frag = document.createDocumentFragment();
+    rows.forEach((row, i) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'marq' + (i ? ' rev' : '');
+      const track = document.createElement('ul');
+      track.className = 'skills marq-track';
+      // twice through, so translateX(-50%) loops seamlessly
+      for(let pass = 0; pass < 2; pass++){
+        row.forEach(el => {
+          const copy = el.cloneNode(true);
+          if(pass) copy.setAttribute('aria-hidden', 'true');
+          track.appendChild(copy);
+        });
+      }
+      wrap.appendChild(track);
+      frag.appendChild(wrap);
+    });
+    src.replaceWith(frag);
+  })();
+
   // light/dark
   const flip = document.getElementById('flip');
   flip.addEventListener('click', ()=>{
-    
     const on = document.body.classList.toggle('paper');
     flip.textContent = on ? 'blueprint view' : 'paper view';
   });
