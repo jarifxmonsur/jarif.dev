@@ -64,11 +64,6 @@
     if(ht) ht.textContent = 'double-tap the background';
   }
 
-  // taps on the background, or anywhere that isn't a link/button.
-  // fires on release, not press: on a phone every scroll STARTS with a
-  // touch, so firing on pointerdown glitched the page on every swipe.
-  // we remember where the finger went down and only glitch if it
-  // barely moved and lifted quickly — i.e. a tap, not a drag.
   let downX = 0, downY = 0, downAt = 0, armed = false;
   // touch devices need two taps — one tap is too easy to trigger by accident
   let lastTapAt = 0, lastTapX = 0, lastTapY = 0;
@@ -85,7 +80,7 @@
     if(moved > 12) return;                          // dragged or scrolled
     if(performance.now() - downAt > 600) return;    // long press
 
-    // pointerType tells us how this event was made: 'mouse', 'touch' or 'pen'
+    
     if(e.pointerType === 'touch'){
       const now = performance.now();
       const nearLast = Math.hypot(e.clientX - lastTapX, e.clientY - lastTapY) < 44;
@@ -101,7 +96,7 @@
     glitch(e.clientY);
   });
 
-  // the browser fires this when it takes the gesture over for scrolling
+  
   document.addEventListener('pointercancel', () => { armed = false; });
 
   // terminal
@@ -229,10 +224,6 @@
       setTimeout(()=>{ if(b[0]==='__WHOAMI__'){ commands.whoami(); blank(); } else line(b[0]); }, t);
     });
   }
-
-  // turn the plain skills list into two scrolling rows.
-  // the <ul> in the HTML is the source of truth — this just rearranges it,
-  // so if JS fails you still get a normal wrapped list.
   (function marquee(){
     const src = document.getElementById('skills');
     if(!src || reduce) return;
@@ -248,7 +239,7 @@
       wrap.className = 'marq' + (i ? ' rev' : '');
       const track = document.createElement('ul');
       track.className = 'skills marq-track';
-      // twice through, so translateX(-50%) loops seamlessly
+    
       for(let pass = 0; pass < 2; pass++){
         row.forEach(el => {
           const copy = el.cloneNode(true);
