@@ -40,7 +40,6 @@
     document.body.classList.add('glitching');
     setTimeout(()=>document.body.classList.remove('glitching'), 320);
 
-    // shove the grid sideways so the background reacts too
     field.style.backgroundPosition = rand(-14,14).toFixed(0)+'px '+rand(-14,14).toFixed(0)+'px';
     setTimeout(()=>{ field.style.backgroundPosition = '0 0'; }, 260);
 
@@ -58,14 +57,12 @@
     })(t0);
   }
 
-  // no hover means a touch device — tell them it takes two taps
   if(window.matchMedia('(hover: none)').matches){
     const ht = document.getElementById('hintText');
     if(ht) ht.textContent = 'double-tap the background';
   }
 
   let downX = 0, downY = 0, downAt = 0, armed = false;
-  // touch devices need two taps — one tap is too easy to trigger by accident
   let lastTapAt = 0, lastTapX = 0, lastTapY = 0;
 
   document.addEventListener('pointerdown', e => {
@@ -77,15 +74,14 @@
     if(!armed) return;
     armed = false;
     const moved = Math.hypot(e.clientX - downX, e.clientY - downY);
-    if(moved > 12) return;                          // dragged or scrolled
-    if(performance.now() - downAt > 600) return;    // long press
-
+    if(moved > 12) return;                          
+    if(performance.now() - downAt > 600) return;    
     
     if(e.pointerType === 'touch'){
       const now = performance.now();
       const nearLast = Math.hypot(e.clientX - lastTapX, e.clientY - lastTapY) < 44;
       if(now - lastTapAt < 400 && nearLast){
-        lastTapAt = 0;            // consume it, so a third tap starts fresh
+        lastTapAt = 0;            
         glitch(e.clientY);
       } else {
         lastTapAt = now; lastTapX = e.clientX; lastTapY = e.clientY;
@@ -206,10 +202,9 @@
     else if(e.key==='ArrowDown'){ e.preventDefault(); if(hIdx>0){ hIdx--; input.value=hist[hIdx]; } else { hIdx=-1; input.value=''; } }
   });
 
-  // intro text on load
   const boot = [
     ['<span class="mu">about.sh — loading…</span>', 200],
-    ['<span class="mu">→ 1 project · 1 semester · 0 internships so far</span>', 340],
+    ['<span class="mu">→ 1 project · 1 semester </span>', 340],
     ['<span class="cy">jarif@sydney:~$</span> whoami', 460],
     ['__WHOAMI__', 240],
     ['<span class="mu">Type <span class="sg">help</span>, tap a command, or click the background.</span>', 200]
