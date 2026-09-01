@@ -32,6 +32,7 @@ body.paper{
 html{scroll-behavior:smooth}
 body{
   margin:0;background:var(--navy);color:var(--chalk);
+  touch-action:manipulation;
   font-family:var(--sans);font-size:16px;line-height:1.55;
   -webkit-font-smoothing:antialiased;
   transition:background .35s ease,color .35s ease;
