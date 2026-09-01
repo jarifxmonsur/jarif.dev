@@ -1,0 +1,16 @@
+:root{
+  --navy:#08182B;
+  --navy-2:#0C2339;
+  --panel:rgba(12,35,57,.72);
+  --line:rgba(122,190,235,.16);
+  --line-strong:rgba(122,190,235,.34);
+  --chalk:#E6F0F8;
+  --muted:#7FA3BF;
+  --cyan:#35D6F0;
+  --signal:#FFC24B;
+  --grid:rgba(122,190,235,.07);
+  --grid-major:rgba(122,190,235,.11);
+  --radius:2px;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"Space Grotesk",system-ui,-apple-system,Segoe UI,sans-serif;
+}
