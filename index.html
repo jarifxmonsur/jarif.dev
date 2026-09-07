@@ -49,11 +49,11 @@
     <div class="meta-row">
       <span>Sydney, AU · <b>GMT+11</b></span>
       <span>First-year Computer Science, <b>UNSW</b></span>
-      <span>currently: <b>CS50x + CS50P</b></span>
-      
+      <span>currently: <b>CS50x</b></span>
+      <span><a href="https://cs50.harvard.edu/certificates/a4a9c74f-d0a8-42cd-96a3-f7f5e1f95d12" target="_blank" rel="noopener noreferrer">CS50P certified ↗</a></span>
     </div>
     <h1 class="name">Jarif<span class="slash">/</span>Monsur</h1>
-    <p class="pitch">First year CS at UNSW. I've built one real thing so far, I'm partway through both CS50 courses, and I wrote this page myself to work out how the front end actually fits together. Interested in AI engineering, full-stack and cloud. Still exploring my options. <em>Click the background.</em></p>
+    <p class="pitch">First year CS at UNSW. I've shipped two real things now, I'm partway through CS50x, and I wrote this page myself to work out how the front end actually fits together. Interested in AI engineering, full-stack and cloud. Still exploring my options. <em>Click the background.</em></p>
 
     <div class="term-shell">
       <div class="term-bar">
@@ -92,10 +92,28 @@
     </div>
 
     <div class="entry">
+      <div class="when">Sep 2026</div>
+      <div>
+        <h3>Built an SSH auth log analyser</h3>
+        <p>A two-pointer sliding window that tells a genuine brute-force attempt apart from someone mistyping their password, plus a second check for username enumeration. Tested against a synthetic log with known planted attacks, so I could actually prove the detector was right.</p>
+        <div class="tag">Python · regex · pytest</div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="when">Sep 2026</div>
+      <div>
+        <h3>Earned the CS50P certificate</h3>
+        <p>Finished Harvard's introduction to programming with Python.</p>
+        <div class="tag"><a href="https://cs50.harvard.edu/certificates/a4a9c74f-d0a8-42cd-96a3-f7f5e1f95d12" target="_blank" rel="noopener noreferrer">View certificate ↗</a></div>
+      </div>
+    </div>
+
+    <div class="entry">
       <div class="when">Now</div>
       <div>
-        <h3>CS50x, CS50P, and this page</h3>
-        <p>Doing both Harvard courses on top of uni. Building this page by hand at the same time. No framework, no template, which is slower but I actually understand it.</p>
+        <h3>CS50x</h3>
+        <p>Working through Harvard's CS50x on top of uni. Building this page by hand at the same time. No framework, no template, which is slower but I actually understand it.</p>
         <div class="tag">C · Python · JavaScript</div>
       </div>
     </div>
@@ -103,7 +121,7 @@
 
   <section id="builds">
     <div class="head"><span class="idx">02</span><h2>What I've built</h2><span class="rule"></span></div>
-    <div class="builds pair">
+    <div class="builds">
       <div class="build">
         <div class="num">24</div><span class="unit">hours, idea to deployed</span>
         <h3>CultureGuessr</h3>
@@ -112,18 +130,24 @@
         <div class="tags"><a href="https://cultureguessr.onrender.com">cultureguessr.onrender.com &rarr;</a></div>
       </div>
       <div class="build">
+        <div class="num">2</div><span class="unit">detectors, one sliding window</span>
+        <h3>SSH Auth Log Analyser</h3>
+        <p>Reads SSH auth logs and flags brute-force and username-enumeration attacks. A two-pointer sliding window catches bursts of failed logins by rate, not raw count — five failures in three seconds gets flagged, five spread across eight hours doesn't.</p>
+        <div class="tags">Python · regex · pytest · argparse</div>
+        <div class="tags"><a href="https://github.com/jarifxmonsur/ssh-log-analyser">github.com/jarifxmonsur/ssh-log-analyser &rarr;</a></div>
+      </div>
+      <div class="build">
         <div class="num">32</div><span class="unit">bits, pulled apart field by field</span>
         <h3>MIPS decoder in C</h3>
         <p>Reads raw MIPS machine code and works out what each instruction actually is — arithmetic, logical, shifts and memory access, including the awkward ones like clo. Every 32-bit word gets split into opcode, registers and immediate using bitmasks and shifts, with sign extension where the spec calls for it, then printed back out as assembly. Uni coursework, so the repo stays private.</p>
         <div class="tags">C · bitwise ops · MIPS · UNSW coursework</div>
       </div>
     </div>
-    <p class="aside">Two so far. I'd rather put up what I actually finished than fill the page.</p>
+    <p class="aside">Three so far. I'd rather put up what I actually finished than fill the page.</p>
   </section>
 
   <section id="stack">
     <div class="head"><span class="idx">03</span><h2>What I use</h2><span class="rule"></span></div>
-    <!-- add a skill = add one <li>. the marquee rebuilds itself. -->
     <ul class="skills" id="skills">
       <li>Python</li>
       <li>C</li>
@@ -131,6 +155,8 @@
       <li>HTML</li>
       <li>CSS</li>
       <li>FastAPI</li>
+      <li>regex</li>
+      <li>pytest</li>
       <li>git</li>
       <li>GitHub</li>
       <li>MIPS</li>
@@ -151,7 +177,7 @@
 
   <section class="end">
     <h2>Looking for someone willing to let me build something real.</h2>
-    <p>I know I'm early. What I do have is one finished project that's actually online, two courses I'm working through, and I finish things rather than leaving them on localhost. Mostly interested in AI engineering, full-stack and cloud. Internship, part-time, an open source issue, anything that needs a spare pair of hands. I reply fast, I ask before I guess, and I'll say when I'm stuck instead of quietly wasting three days on it.</p>
+    <p>I know I'm early. What I do have is two finished projects that are actually online, a CS50P certificate, and I finish things rather than leaving them on localhost. Mostly interested in AI engineering, full-stack and cloud. Internship, part-time, an open source issue, anything that needs a spare pair of hands. I reply fast, I ask before I guess, and I'll say when I'm stuck instead of quietly wasting three days on it.</p>
     <div class="links">
       <a class="key" href="mailto:zarifxmonsur@gmail.com" aria-label="Email me"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/></svg><span class="lbl">zarifxmonsur@gmail.com</span></a>
       <a href="https://github.com/jarifxmonsur" aria-label="GitHub"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span class="lbl">GitHub</span></a>
