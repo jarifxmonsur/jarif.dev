@@ -4,7 +4,6 @@
   const chipBox = document.getElementById('chips');
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // the glitch effect
   const page = document.getElementById('page');
   const field = document.getElementById('field');
   const tears = document.getElementById('tears');
@@ -74,28 +73,25 @@
     if(!armed) return;
     armed = false;
     const moved = Math.hypot(e.clientX - downX, e.clientY - downY);
-    if(moved > 12) return;                          
-    if(performance.now() - downAt > 600) return;    
-    
+    if(moved > 12) return;
+    if(performance.now() - downAt > 600) return;
+
     if(e.pointerType === 'touch'){
       const now = performance.now();
       const nearLast = Math.hypot(e.clientX - lastTapX, e.clientY - lastTapY) < 44;
       if(now - lastTapAt < 400 && nearLast){
-        lastTapAt = 0;            
+        lastTapAt = 0;
         glitch(e.clientY);
       } else {
         lastTapAt = now; lastTapX = e.clientX; lastTapY = e.clientY;
       }
       return;
     }
-
     glitch(e.clientY);
   });
 
-  
   document.addEventListener('pointercancel', () => { armed = false; });
 
-  // terminal
   function line(html, cls){
     const d = document.createElement('div');
     d.className = 'ln ' + (cls||'');
@@ -129,33 +125,38 @@
       kv('status','First-year Computer Science, UNSW');
       kv('coding since','February 2026');
       kv('into','AI engineering · full-stack · cloud');
-      kv('doing','CS50x + CS50P, on top of uni');
+      kv('certified','CS50P — Harvard');
+      kv('doing','CS50x, on top of uni');
       kv('after','<span class="cy">an internship, or any real project</span>');
       blank();
-      line('Not much here yet. Still a journey in progress.');
+      line('Two things shipped so far. Still a journey in progress.');
     },
     log(){
       line('<span class="sg">Feb 2026</span>  started CS at UNSW');
       line('<span class="sg">Aug 2026</span>  built CultureGuessr in 24h at SYNCS Hack');
-      line('<span class="sg">Now</span>       CS50x, CS50P, and this site');
+      line('<span class="sg">Sep 2026</span>  built an SSH auth log analyser');
+      line('<span class="sg">Sep 2026</span>  earned the CS50P certificate');
+      line('<span class="sg">Now</span>       CS50x, and this site');
       go('#log');
     },
     builds(){
-      line('CultureGuessr  <span class="mu">real-time multiplayer culture guessing game</span>');
-      line('               <span class="cy">cultureguessr.onrender.com</span>');
-      line('MIPS decoder   <span class="mu">reads machine code, prints the assembly</span>');
+      line('CultureGuessr        <span class="mu">real-time multiplayer culture guessing game</span>');
+      line('                     <span class="cy">cultureguessr.onrender.com</span>');
+      line('SSH Log Analyser     <span class="mu">sliding-window brute-force + enumeration detector</span>');
+      line('                     <span class="cy">github.com/jarifxmonsur/ssh-log-analyser</span>');
+      line('MIPS decoder         <span class="mu">reads machine code, prints the assembly</span>');
       blank();
-      line('Two so far. Both finished.', 'mu');
+      line('Three so far. All finished.', 'mu');
       go('#builds');
     },
     stack(){
       line('C · git             <span class="mu">comfortable</span>');
-      line('Python · HTML/CSS   <span class="mu">getting there</span>');
+      line('Python · regex · pytest <span class="mu">getting there</span>');
       line('FastAPI · JavaScript <span class="mu">just started</span>');
       go('#stack');
     },
     learning(){
-      line('Right now: CS50x and CS50P, both going at once, plus first year.');
+      line('Right now: CS50x, plus first year. Just wrapped CS50P.');
       line('Want to end up in AI engineering, full-stack or cloud. Trying all three.', 'mu');
     },
     hobbies(){
@@ -204,7 +205,7 @@
 
   const boot = [
     ['<span class="mu">about.sh — loading…</span>', 200],
-    ['<span class="mu">→ 1 project · 1 semester </span>', 340],
+    ['<span class="mu">→ 2 shipped · CS50P certified</span>', 340],
     ['<span class="cy">jarif@sydney:~$</span> whoami', 460],
     ['__WHOAMI__', 240],
     ['<span class="mu">Type <span class="sg">help</span>, tap a command, or click the background.</span>', 200]
@@ -234,7 +235,7 @@
       wrap.className = 'marq' + (i ? ' rev' : '');
       const track = document.createElement('ul');
       track.className = 'skills marq-track';
-    
+
       for(let pass = 0; pass < 2; pass++){
         row.forEach(el => {
           const copy = el.cloneNode(true);
@@ -248,7 +249,6 @@
     src.replaceWith(frag);
   })();
 
-  // light nd dark mode
   const flip = document.getElementById('flip');
   flip.addEventListener('click', ()=>{
     const on = document.body.classList.toggle('paper');
